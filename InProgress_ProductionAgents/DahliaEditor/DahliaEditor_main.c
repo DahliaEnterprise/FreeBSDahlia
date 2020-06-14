@@ -83,11 +83,13 @@ int main()
         //Poll(Detect) events from Keyboard, Mouse, GamePad events
         dahliaeditor_poll_events();
         
+        
         //Begin Application Logic
         
         //End Application Logic
         
         //Define Events That Have Been Released
+        dahliaeditor_define_released_events();
         
     }
 }
