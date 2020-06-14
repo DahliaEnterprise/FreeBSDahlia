@@ -59,13 +59,30 @@
 
     //XCB Event Handle
     xcb_generic_event_t * xcb_event;
+    
+    //Dahlia Images Paradigm
+        //Pre-requisite to Dahlia Images
+        #include "/root/DahliaEditor/data_consume_assist/data_consume_assist.h"
+        #include "/root/DahliaEditor/string_to_integer/string_to_integer.h"
+        #include "/root/DahliaEditor/total_digits_within_integer/total_digits_within_integer.h"
+    #include "/root/DahliaEditor/dahlia_image/dahlia_image.h"
+    
+    //English Font - Utilizes Dahlia Images paradigm
+    char * font_english_letter_index;
+    struct dahlia_image ** font_english_images;
 
 
-//Include DahliaEditor Definitions
+//Include DahliaEditor Definitions - (Temporarily Contains Header Format Function Declarations)
 void dahliaeditor_create_window(uint16_t width, uint16_t height);
 void dahliaeditor_initialize_events();
 void dahliaeditor_poll_events();
 void dahliaeditor_define_released_events();
+#include "/root/DahliaEditor/data_consume_assist/data_consume_assist.c"
+#include "/root/DahliaEditor/string_to_integer/string_to_integer.c"
+#include "/root/DahliaEditor/total_digits_within_integer/total_digits_within_integer.c"
+#include "/root/DahliaEditor/dahlia_image/dahlia_image.c"
+void dahliaeditor_initialize_font_english();
+uint8_t dahliaeditor_font_english_get_index_by_letter(char* letter);
 
 //Begin Program
 int main()
@@ -485,3 +502,75 @@ void dahliaeditor_define_released_events()
 		xcb_event_keyboard_rightarrow_state = 0;
 	}
 }
+
+void dahliaeditor_initialize_font_english()
+{
+    //Allocate memory for letter index map.
+	font_english_letter_index = 0; while( font_english_letter_index == 0 ){ font_english_letter_index = (char*)malloc( 26 * sizeof(char) ); }
+	
+	//Map index numbers to letters.
+	font_english_letter_index[0] = 'a';
+	font_english_letter_index[1] = 'b';
+	font_english_letter_index[2] = 'c';
+	font_english_letter_index[3] = 'd';
+	font_english_letter_index[4] = 'e';
+	font_english_letter_index[5] = 'f';
+	font_english_letter_index[6] = 'g';
+	font_english_letter_index[7] = 'h';
+	font_english_letter_index[8] = 'i';
+	font_english_letter_index[9] = 'j';
+	font_english_letter_index[10] = 'k';
+	font_english_letter_index[11] = 'l';
+	font_english_letter_index[12]= 'm';
+	font_english_letter_index[13] = 'n';
+	font_english_letter_index[14] = 'o';
+	font_english_letter_index[15] = 'p';
+	font_english_letter_index[16] = 'q';
+	font_english_letter_index[17] = 'r';
+	font_english_letter_index[18] = 's';
+	font_english_letter_index[19] = 't';
+	font_english_letter_index[20] = 'u';
+	font_english_letter_index[21] = 'v';
+	font_english_letter_index[22] = 'w';
+	font_english_letter_index[23] = 'x';
+	font_english_letter_index[24] = 'y';
+	font_english_letter_index[25] = 'z';
+
+	//Allocate memory for array images.
+	font_english_images = 0; while( font_english_images == 0){ font_english_images = (struct dahlia_image**)malloc(26 * sizeof(struct dahlia_image)); }
+	
+	//loop through each letter index and load that image.
+	char letterImages_fileLocationAndName[] = "/root/DahliaEditor/dahlia_alphabet_english/letter_a.dahlia_rgba";
+	uint8_t letterReplacementIndex = 72; //position of the letterImage_fileLocationAndName to be automated for letter-replacement.///
+	uint8_t currentIndex = 0;
+	while(currentIndex < 26){
+		//Update file location string.
+		letterImages_fileLocationAndName[letterReplacementIndex] = font_english_letter_index[currentIndex];
+
+		//Load image into array of images memory.
+		font_english_images[currentIndex] = dahlia_image_load_file(letterImages_fileLocationAndName);
+
+		//Next
+		currentIndex = currentIndex + 1;
+	}
+}
+
+uint8_t dahliaedtor_font_english_get_index_by_letter(char* letter){
+	uint8_t output = 0;
+
+	uint8_t currentIndex = 0;
+	while(currentIndex < 26){
+		if(strncmp(letter, &font_english_letter_index[currentIndex], 1) == 0){
+			output = currentIndex;
+			//Stop search
+			currentIndex = 26;
+		}
+
+		//Next
+		currentIndex = currentIndex + 1;
+	}	
+
+	return output;
+}
+
+
