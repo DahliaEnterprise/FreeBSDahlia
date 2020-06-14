@@ -1,0 +1,1 @@
+uint32_t dahlia_string_to_unsigned_integer_thirtytwo(char* stringToConvert);

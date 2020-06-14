@@ -1,0 +1,2 @@
+struct timespec nanosecondresolution_timekeeper;
+uint64_t nanosecondresolution_timekeeper_getCurrentTime();

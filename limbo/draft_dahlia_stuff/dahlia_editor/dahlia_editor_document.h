@@ -1,0 +1,5 @@
+char * dahlia_editor_wholeDocumentContents;
+uint32_t dahlia_editor_wholeDocumentContents_memory_size;
+uint32_t dahlia_editor_wholeDocumentContents_cursor_index;
+void dahlia_editor_document_initialize();
+void dahlia_editor_document_insert_string(char* stringToInsert);

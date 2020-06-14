@@ -1,0 +1,47 @@
+/** Keyboard State Definition: 0 = key up, 1 = key down, 2 = key released(reset to key up at end of cycle) **/
+uint8_t dahlia_editor_engine_event_keyboard_a_state;
+uint8_t dahlia_editor_engine_event_keyboard_b_state;
+uint8_t dahlia_editor_engine_event_keyboard_c_state;
+uint8_t dahlia_editor_engine_event_keyboard_d_state;
+uint8_t dahlia_editor_engine_event_keyboard_e_state;
+uint8_t dahlia_editor_engine_event_keyboard_f_state;
+uint8_t dahlia_editor_engine_event_keyboard_g_state;
+uint8_t dahlia_editor_engine_event_keyboard_h_state;
+uint8_t dahlia_editor_engine_event_keyboard_i_state;
+uint8_t dahlia_editor_engine_event_keyboard_j_state;
+uint8_t dahlia_editor_engine_event_keyboard_k_state;
+uint8_t dahlia_editor_engine_event_keyboard_l_state;
+uint8_t dahlia_editor_engine_event_keyboard_m_state;
+uint8_t dahlia_editor_engine_event_keyboard_n_state;
+uint8_t dahlia_editor_engine_event_keyboard_o_state;
+uint8_t dahlia_editor_engine_event_keyboard_p_state;
+uint8_t dahlia_editor_engine_event_keyboard_q_state;
+uint8_t dahlia_editor_engine_event_keyboard_r_state;
+uint8_t dahlia_editor_engine_event_keyboard_s_state;
+uint8_t dahlia_editor_engine_event_keyboard_t_state;
+uint8_t dahlia_editor_engine_event_keyboard_u_state;
+uint8_t dahlia_editor_engine_event_keyboard_v_state;
+uint8_t dahlia_editor_engine_event_keyboard_w_state;
+uint8_t dahlia_editor_engine_event_keyboard_x_state;
+uint8_t dahlia_editor_engine_event_keyboard_y_state;
+uint8_t dahlia_editor_engine_event_keyboard_z_state;
+uint8_t dahlia_editor_engine_event_keyboard_leftarrow_state;
+uint8_t dahlia_editor_engine_event_keyboard_rightarrow_state;
+
+//Mouse Event States
+int16_t dahlia_editor_engine_event_mouse_x ;
+int16_t dahlia_editor_engine_event_mouse_y ;
+uint8_t dahlia_editor_engine_event_mouse_leftbutton_down;
+uint8_t dahlia_editor_engine_event_mouse_rightbutton_down;
+
+//Redraw Time Keeper.
+uint64_t dahlia_editor_engine_xcb_timestamp_last_frame_rendered;
+
+//XCB Event Handle
+xcb_generic_event_t * dahlia_editor_engine_event;
+
+//Header, Functions
+void dahlia_engine_xcb_events_initialize();
+void dahlia_engine_xcb_events_poll();
+void dahlia_engine_xcb_events_reset_released_states();
+
