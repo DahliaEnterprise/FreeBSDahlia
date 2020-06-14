@@ -67,6 +67,9 @@
         #include "/root/DahliaEditor/total_digits_within_integer/total_digits_within_integer.h"
     #include "/root/DahliaEditor/dahlia_image/dahlia_image.h"
     
+    //Canvas to be set by any and read by XCB
+    struct dahlia_image * dahlia_framebuffer_image;
+    
     //English Font - Utilizes Dahlia Images paradigm
     char * font_english_letter_index;
     struct dahlia_image ** font_english_images;
@@ -95,14 +98,34 @@ int main()
     //Initialize Events (Using XCB events that are already integrated into the window)
     dahliaeditor_initialize_events();
     
+    //Initialize Canvas
+    dahlia_framebuffer_image = dahlia_image_initialize(initial_window_width, initial_window_height);
+        //Fill the entire framebuffer image with no transparency(0) with a solid color.
+        uint32_t currentIndex = 0;
+        while(currentIndex < dahlia_framebuffer_image->totalColorsInGrid){
+            dahlia_framebuffer_image->colorGrid[currentIndex] = 0xFFFFFFFF;
+            dahlia_framebuffer_image->transparencyGrid[currentIndex] = 0;
+            //Next
+            currentIndex = currentIndex + 1;
+        }
+
     //Begin Window Sustain Life Loop.
     while(1==1){
         //Poll(Detect) events from Keyboard, Mouse, GamePad events
         dahliaeditor_poll_events();
         
-        
         //Begin Application Logic
-        
+            //Draw letter "a" to screen.
+                //TEMP DRAWER - DRAW DOT
+                uint32_t color[2]; 
+                color[0] = (uint32_t)0xFFFFFFFF;
+                color[1] = 0;
+                xcb_change_gc(xcb_connection, xcb_fill, XCB_GC_FOREGROUND | XCB_GC_BACKGROUND, color);
+                xcb_poly_fill_rectangle(xcb_connection, xcb_pid, xcb_fill, 1, (xcb_rectangle_t[]){{ 1, 1, 10, 10}});
+    
+                xcb_copy_area(xcb_connection, xcb_pid, xcb_window, xcb_fill, 1, 1, 1, 1, initial_window_width, initial_window_height);
+                xcb_flush(xcb_connection);
+
         //End Application Logic
         
         //Define Events That Have Been Released
